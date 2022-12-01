@@ -24,7 +24,8 @@ const AddTask = () => {
         padding: 1.5% 3% 1.5% 3%;
         border-radius: 15px;
         background: orange;
-        color: white;    
+        color: white;
+        cursor: pointer;    
     `
 
     const TextEntry = styled.input`
