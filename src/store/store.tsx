@@ -1,5 +1,4 @@
-import { applyMiddleware, combineReducers, createReducer, createStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk"
+import { combineReducers, createStore } from "@reduxjs/toolkit";
 
 const initialState = { 
     0: {
@@ -22,7 +21,7 @@ export const store = createStore(combineReducers({
 }));
 
 
-function taskReducer(state = initialState, action){
+function taskReducer(state : any = initialState, action : any){
     switch (action.type) {
         case "changeName": {
             const {id, name} = action.payload;
@@ -49,20 +48,20 @@ function taskReducer(state = initialState, action){
 }
 
 // selectors
-export const getName = (id) => {
-    return function selectName(state) {
+export const getName = (id : number) => {
+    return function selectName(state : any) {
         return state.task[id].name;
     }
 };
 
-export const getDescription = (id) => {
-    return function selectDescription(state) {
+export const getDescription = (id : number) => {
+    return function selectDescription(state : any) {
         return state.task[id].description;
     }
 }
 
-export const getIsComplete = (id) => {
-    return function selectIsComplete(state) {
+export const getIsComplete = (id : number) => {
+    return function selectIsComplete(state : any) {
         return state.task[id].isComplete;
     }
 }
