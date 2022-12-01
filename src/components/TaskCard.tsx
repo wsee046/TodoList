@@ -15,12 +15,6 @@ function TaskCard(props : TaskCardProps) {
     background-color: dimgrey;
     padding: 2%;
     border: solid 1px black;
-
-    ${task.isComplete && `
-      color: dark-brown;
-      text-decoration: line-through;
-    `}
-
   `
 
   const TaskTitle = styled.h1`
@@ -35,10 +29,14 @@ function TaskCard(props : TaskCardProps) {
   const TaskInfo = styled.div`
     text-align: left;
     flex: 3;
+    
+    ${task.isComplete && `
+      color: dark-brown;
+      text-decoration: line-through;
+    `}
   `
 
   const Buttons = styled.div`
-    text-decoration: none !important; 
     flex: 1;
     display: flex;
     justify-content: space-between;
