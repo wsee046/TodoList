@@ -15,6 +15,8 @@ const AddTask = () => {
     const Field = styled.div`
         display: flex;
         flex-direction: column;
+        width: 80%;
+        height: 100%;
         gap: 5px;
     `
 
