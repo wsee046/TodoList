@@ -15,6 +15,8 @@ const AddTask = () => {
     const Field = styled.div`
         display: flex;
         flex-direction: column;
+        width: 80%;
+        height: 100%;
         gap: 5px;
     `
 
@@ -22,7 +24,8 @@ const AddTask = () => {
         padding: 1.5% 3% 1.5% 3%;
         border-radius: 15px;
         background: orange;
-        color: white;    
+        color: white;
+        cursor: pointer;    
     `
 
     const TextEntry = styled.input`
