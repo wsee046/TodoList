@@ -1,5 +1,12 @@
+import styled, {css} from "styled-components"
+
 const AddTask = () => {
+    const AddTaskCard = styled.div`
+    background: #383636;
+    color: white;
+    `
     return (
+        <AddTaskCard>
         <form>
             <div>
                 <label>Name</label>
@@ -11,6 +18,7 @@ const AddTask = () => {
             </div>
             <input type='submit' value='Add Task'/>
         </form>
+        </AddTaskCard>
     )
 }
 
