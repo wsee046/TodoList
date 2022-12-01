@@ -3,24 +3,11 @@ import AddTask from './components/AddTask';
 import styled, {css} from "styled-components"
 import TaskCard from './components/TaskCard';
 import { ITask } from './types/schema';
+import { store } from './store/store';
 
 function App() {
 
-  const tasks : ITask[] = [
-    {
-      id : 1,
-      name: 'Task 1',
-      description: 'Task 1 description',
-      isComplete: false
-    },
-    {
-      id : 2,
-      name: 'Task 2',
-      description: 'Task 2 description',
-      isComplete: true
-    },
-
-  ]
+  const tasks : ITask[] = Object.values(store.getState().task);
 
   const Background = styled.div`
     background: #2b2b27;
@@ -34,7 +21,9 @@ function App() {
         <h2 style={{color: 'white'}}>My Todos</h2>
         <div style={{width: '80%', margin: 'auto'}}>
           <AddTask/>
-          {tasks.map((task => (<TaskCard task={task}/>)))}
+          {tasks.map(((task : any) => (<TaskCard key={task.id}task={
+            task
+            }/>)))}
         </div>
       </Background>
     </div>
