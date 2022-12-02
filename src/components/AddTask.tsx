@@ -1,4 +1,8 @@
+import { FormEvent } from "react"
 import styled, {css} from "styled-components"
+import { useDispatch, useSelector } from 'react-redux'
+import { getName, getNextId } from "../store/store"
+import { store } from '.././store/store'
 
 const AddTask = () => {
 
@@ -20,19 +24,20 @@ const AddTask = () => {
         gap: 5px;
     `
 
-    const SubmitButton = styled.input`
+    const SubmitButton = styled.button`
         padding: 1.5% 3% 1.5% 3%;
-        border-radius: 15px;
+        border-radius: 30px;
         background: orange;
         color: white;
-        cursor: pointer;    
+        cursor: pointer;
+        width: 30%;
     `
 
     const TextEntry = styled.input`
         border-radius: 10px;
         height: 1.6em;
         padding-left: 5%;
-        width: 100%;
+        width: 90%;
     `
 
     const Label = styled.label`
@@ -40,17 +45,37 @@ const AddTask = () => {
         padding-left: 5%;
     `
 
+    const dispatch = useDispatch();
+
+    function handleAddTask(event : any){
+        event.preventDefault();
+        const nextId = getNextId()
+        dispatch({
+            type: "addTask",
+            payload: {
+                id: nextId,
+                task: {
+                    id: nextId,
+                    name: event.target.elements.nameInput.value,
+                    description: event.target.elements.descriptionInput.value,
+                    isComplete: false,
+                    }
+            }
+        })
+        console.log(store.getState());
+    }
+
     return (
-        <Form>
+        <Form onSubmit={handleAddTask}>
             <Field>
-                <Label htmlFor="name">Name</Label>
-                <TextEntry id="name" type='text'/>
+                <Label htmlFor="nameInput">Name</Label>
+                <TextEntry id="nameInput" type='text'/>
             </Field>
             <Field>
-                <Label htmlFor="description">Description</Label>
-                <TextEntry id="description" type='text'/>
+                <Label htmlFor="descriptionInput">Description</Label>
+                <TextEntry id="descriptionInput" type='text'/>
             </Field>
-            <SubmitButton type='submit' value='Add Todo'/>
+            <SubmitButton type='submit'>Add Todo</SubmitButton>
         </Form>
     )
 }
