@@ -1,18 +1,12 @@
 import styled from "styled-components";
 import { ITask } from "../types/schema";
 import { useDispatch } from "react-redux";
-import { changeIsComplete, store } from "../store/store";
+import { changeIsComplete } from "../store/store";
 interface TaskCardProps {
   task: ITask;
 }
 
-function TaskCard(props : TaskCardProps) {
-
-  const task = props.task
-
-  const dispatch = useDispatch();
-
-  const TaskCardContainer = styled.div`
+const TaskCardContainer = styled.div`
     display: flex;
     align-items: baseline;
     background-color: dimgrey;
@@ -32,11 +26,6 @@ function TaskCard(props : TaskCardProps) {
   const TaskInfo = styled.div`
     text-align: left;
     flex: 3;
-    
-    ${task.isComplete && `
-      color: dark-brown;
-      text-decoration: line-through;
-    `}
   `
 
   const Buttons = styled.div`
@@ -54,13 +43,20 @@ function TaskCard(props : TaskCardProps) {
     border: solid 1px ${props => props.color ? props.color : "white"};
   `
 
+function TaskCard(props : TaskCardProps) {
+
+  const task = props.task
+
+  const dispatch = useDispatch();
+
   function onComplete() {
-    store.dispatch(changeIsComplete(task.id));
+    dispatch(changeIsComplete(task.id));
   }
 
   return (
     <TaskCardContainer>
-        <TaskInfo>
+        <TaskInfo style={{color: task.isComplete ? 'dark-brown' : '',
+      textDecoration: task.isComplete ? 'line-through' : ''}}>
             <TaskTitle>{task.name}</TaskTitle>
             <TaskDescription>{task.description}</TaskDescription>
         </TaskInfo>
