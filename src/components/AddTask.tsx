@@ -1,12 +1,10 @@
 import { FormEvent } from "react"
 import styled, {css} from "styled-components"
 import { useDispatch, useSelector } from 'react-redux'
-import { getName, getNextId } from "../store/store"
+import { getName, getNextId, addTask } from "../store/store"
 import { store } from '.././store/store'
 
-const AddTask = () => {
-
-    const Form = styled.form`
+const Form = styled.form`
         background: #404040;
         color: white;
         display: flex;
@@ -45,24 +43,31 @@ const AddTask = () => {
         padding-left: 5%;
     `
 
+const AddTask = () => {
+
     const dispatch = useDispatch();
 
     function handleAddTask(event : any){
         event.preventDefault();
-        const nextId = getNextId()
-        dispatch({
-            type: "addTask",
-            payload: {
-                id: nextId,
-                task: {
-                    id: nextId,
-                    name: event.target.elements.nameInput.value,
-                    description: event.target.elements.descriptionInput.value,
-                    isComplete: false,
-                    }
-            }
-        })
-        console.log(store.getState());
+
+        // check if either field is empty
+        const name = event.target.elements.nameInput.value;
+        const description = event.target.elements.descriptionInput.value;
+        if (!name || !description){
+            alert('You have not entered a name and/or a description')
+            return;
+        }
+
+        dispatch(addTask({
+            id: getNextId(),
+            name: name,
+            description: description,
+            isComplete: false,
+        }))
+
+        // clear input fields
+        event.target.elements.nameInput.value = ''
+        event.target.elements.descriptionInput.value = ''
     }
 
     return (

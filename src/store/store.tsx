@@ -1,6 +1,7 @@
 import { combineReducers, createStore } from "@reduxjs/toolkit";
+import { ITask } from "../types/schema";
 
-let currentId : number = 1;
+var currentId : number = 1;
 
 const initialState = { 
     0: {
@@ -48,8 +49,8 @@ function taskReducer(state : any = initialState, action : any){
             return newState;
         }
         case "addTask": {
-            const {id, task} = action.payload;
-            return {...state, [id] : {
+            const {task} = action.payload;
+            return {...state, [task.id] : {
                 id: task.id,
                 name: task.name,
                 description: task.description,
@@ -101,3 +102,13 @@ export const changeIsComplete = (id : number) => {
         },
     }
 }  
+
+export const addTask = (task : ITask) => {
+    //const id = getNextId()
+    return {
+        type: "addTask",
+        payload: {
+            task: task
+        }
+    }
+}
