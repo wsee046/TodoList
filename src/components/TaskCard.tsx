@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ITask } from "../types/schema";
-
+import { useDispatch } from "react-redux";
+import { changeIsComplete, store } from "../store/store";
 interface TaskCardProps {
   task: ITask;
 }
@@ -8,6 +9,8 @@ interface TaskCardProps {
 function TaskCard(props : TaskCardProps) {
 
   const task = props.task
+
+  const dispatch = useDispatch();
 
   const TaskCardContainer = styled.div`
     display: flex;
@@ -51,6 +54,10 @@ function TaskCard(props : TaskCardProps) {
     border: solid 1px ${props => props.color ? props.color : "white"};
   `
 
+  function onComplete() {
+    store.dispatch(changeIsComplete(task.id));
+  }
+
   return (
     <TaskCardContainer>
         <TaskInfo>
@@ -58,7 +65,7 @@ function TaskCard(props : TaskCardProps) {
             <TaskDescription>{task.description}</TaskDescription>
         </TaskInfo>
         <Buttons>
-            <Button color="green">Complete</Button>
+            <Button color="green" onClick={onComplete}>Complete</Button>
             <Button color="blue">Edit</Button>
             <Button color="red">Delete</Button>
         </Buttons>

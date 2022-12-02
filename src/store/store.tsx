@@ -38,10 +38,14 @@ function taskReducer(state : any = initialState, action : any){
             }}
         }
         case "changeIsComplete": {
-            const {id, isComplete} = action.payload;
-            return {...state, [id] : {
-                ...state[id], isComplete: isComplete,
+            const id = action.payload.id;
+            const isCompleteValue = action.payload.isCompleteValue;
+            const newState = {...state, [id] : {
+                ...state[id], isComplete: isCompleteValue,
             }}
+            console.log(newState);
+
+            return newState;
         }
         case "addTask": {
             const {id, task} = action.payload;
@@ -85,3 +89,15 @@ export function getNextId() {
 export const getAllTasks = (state : any) => {
     return state.task;
 }
+
+
+// action creators
+export const changeIsComplete = (id : number) => {
+    return {
+        type: "changeIsComplete",
+        payload: {
+            id: id,
+            isCompleteValue: true,
+        },
+    }
+}  
