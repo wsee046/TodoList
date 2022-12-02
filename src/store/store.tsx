@@ -8,7 +8,7 @@ const initialState = {
     isComplete: false,
     },
     1: {
-        id: 0,
+        id: 1,
         name: "Task 2! :)",
         description: "This is task",
         isComplete: false,
@@ -36,10 +36,14 @@ function taskReducer(state : any = initialState, action : any){
             }}
         }
         case "changeIsComplete": {
-            const {id, isComplete} = action.payload;
-            return {...state, [id] : {
-                ...state[id], isComplete: isComplete,
+            const id = action.payload.id;
+            const isCompleteValue = action.payload.isCompleteValue;
+            const newState = {...state, [id] : {
+                ...state[id], isComplete: isCompleteValue,
             }}
+            console.log(newState);
+
+            return newState;
         }
 
         default:
@@ -63,5 +67,20 @@ export const getDescription = (id : number) => {
 export const getIsComplete = (id : number) => {
     return function selectIsComplete(state : any) {
         return state.task[id].isComplete;
+    }
+}
+
+export const getAllTasks = (state : any) => {
+    return state.task;
+}
+
+// action creators
+export const changeIsComplete = (id : number) => {
+    return {
+        type: "changeIsComplete",
+        payload: {
+            id: id,
+            isCompleteValue: true,
+        },
     }
 }
