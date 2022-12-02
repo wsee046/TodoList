@@ -44,8 +44,6 @@ function taskReducer(state : any = initialState, action : any){
             const newState = {...state, [id] : {
                 ...state[id], isComplete: isCompleteValue,
             }}
-            console.log(newState);
-
             return newState;
         }
         case "addTask": {
@@ -56,6 +54,12 @@ function taskReducer(state : any = initialState, action : any){
                 description: task.description,
                 isComplete: task.isComplete
             }}
+        }
+        case "deleteTask": {
+            const {id} = action.payload
+            const newState = {...state}
+            delete newState[id]
+            return newState
         }
 
         default:
@@ -104,11 +108,19 @@ export const changeIsComplete = (id : number) => {
 }  
 
 export const addTask = (task : ITask) => {
-    //const id = getNextId()
     return {
         type: "addTask",
         payload: {
             task: task
+        }
+    }
+}
+
+export const deleteTask = (id : number) => {
+    return {
+        type: "deleteTask",
+        payload: {
+            id: id
         }
     }
 }
