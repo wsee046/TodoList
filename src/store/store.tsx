@@ -1,5 +1,7 @@
 import { combineReducers, createStore } from "@reduxjs/toolkit";
 
+let currentId : number = 1;
+
 const initialState = { 
     0: {
     id: 0,
@@ -8,7 +10,7 @@ const initialState = {
     isComplete: false,
     },
     1: {
-        id: 0,
+        id: 1,
         name: "Task 2! :)",
         description: "This is task",
         isComplete: false,
@@ -41,6 +43,15 @@ function taskReducer(state : any = initialState, action : any){
                 ...state[id], isComplete: isComplete,
             }}
         }
+        case "addTask": {
+            const {id, task} = action.payload;
+            return {...state, [id] : {
+                id: task.id,
+                name: task.name,
+                description: task.description,
+                isComplete: task.isComplete
+            }}
+        }
 
         default:
             return state;
@@ -64,4 +75,13 @@ export const getIsComplete = (id : number) => {
     return function selectIsComplete(state : any) {
         return state.task[id].isComplete;
     }
+}
+
+export function getNextId() {
+    currentId += 1;
+    return currentId;
+}
+
+export const getAllTasks = (state : any) => {
+    return state.task;
 }
