@@ -1,8 +1,6 @@
-import { FormEvent } from "react"
 import styled, {css} from "styled-components"
-import { useDispatch, useSelector } from 'react-redux'
-import { getName, getNextId, addTask } from "../store/store"
-import { store } from '.././store/store'
+import { useDispatch } from 'react-redux'
+import { getNextId, addTask } from "../store/store"
 
 const Form = styled.form`
         background: #404040;
