@@ -3,7 +3,7 @@ import { ITask } from "../types/schema";
 import { useDispatch } from "react-redux";
 import { changeIsComplete, deleteTask } from "../store/store";
 import EditingSection from "./EditingSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface TaskCardProps {
   task: ITask;
@@ -59,12 +59,16 @@ function TaskCard(props : TaskCardProps) {
   }
 
   function onDelete(){
-    dispatch(deleteTask(task.id))
+    dispatch(deleteTask(task.id));
   }
 
   function onEdit(){
     setIsEditing(!isEditing);
   }
+
+  useEffect(() => {
+    document.title = isEditing ? `Editing ${task.name} | To Do List App` : `To Do List App`;
+  }, [isEditing]);
 
   return (
     <>
