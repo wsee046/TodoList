@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { ITask } from "../types/schema";
-import { useDispatch } from "react-redux";
-import { changeIsComplete, deleteTask } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { changeIsComplete, deleteTask } from "../store/task";
 import EditingSection from "./EditingSection";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { changeCurrentTask, changeIsEditing, getCurrentTask, getIsEditing } from "../store/editing";
 
 interface TaskCardProps {
   task: ITask;
@@ -52,7 +53,8 @@ function TaskCard(props : TaskCardProps) {
   const task = props.task;
   const dispatch = useDispatch();
 
-  const [isEditing, setIsEditing] = useState(false);
+  const isEditing = useSelector(getIsEditing);
+  const currentEditingTask = useSelector(getCurrentTask);
 
   function onComplete() {
     dispatch(changeIsComplete(task.id));
@@ -63,12 +65,21 @@ function TaskCard(props : TaskCardProps) {
   }
 
   function onEdit(){
-    setIsEditing(!isEditing);
+    if (isEditing && currentEditingTask !== task.id) {
+      alert("Please close other editing tabs.");
+    } else if (isEditing) {
+      dispatch(changeIsEditing(false));
+      dispatch(changeCurrentTask(null));
+    }
+    else {
+      dispatch(changeIsEditing(true));
+      dispatch(changeCurrentTask(task.id));
+    }
   }
 
   useEffect(() => {
     document.title = isEditing ? `Editing ${task.name} | To Do List App` : `To Do List App`;
-  }, [isEditing]);
+  }, [isEditing, task.name]);
 
   return (
     <>
@@ -83,7 +94,7 @@ function TaskCard(props : TaskCardProps) {
               <Button color="red" onClick={onDelete}>Delete</Button>
           </Buttons>
       </TaskCardContainer>
-      {isEditing && <EditingSection task={task}/>}
+      {(isEditing && currentEditingTask === task.id) && <EditingSection task={task}/>}
     </>
   )
 }

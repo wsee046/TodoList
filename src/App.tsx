@@ -1,10 +1,9 @@
 import './App.css';
 import AddTask from './components/AddTask';
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 import TaskCard from './components/TaskCard';
 import { ITask } from './types/schema';
-import { getAllTasks, store } from './store/store';
-import { useEffect, useState } from 'react';
+import { getAllTasks } from './store/task';
 import { useSelector } from 'react-redux';
 
 const Background = styled.div`

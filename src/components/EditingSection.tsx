@@ -3,7 +3,7 @@ import { ITask } from '../types/schema';
 import { Label } from '../styles/AddTaskStyles';
 import { useDispatch } from 'react-redux';
 import React from 'react';
-import { changeName, changeDescription } from '../store/store';
+import { changeName, changeDescription } from '../store/task';
 
 const EditingArea = styled.div`
   background-color: white;

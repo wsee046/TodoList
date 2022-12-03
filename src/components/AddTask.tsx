@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { getNextId, addTask } from "../store/store"
+import { getNextId, addTask } from "../store/task"
 import { Form, Field, SubmitButton, Label, TextEntry } from '../styles/AddTaskStyles';
 
 const AddTask = () => {
