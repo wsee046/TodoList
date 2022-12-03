@@ -1,10 +1,9 @@
 import './App.css';
 import AddTask from './components/AddTask';
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 import TaskCard from './components/TaskCard';
 import { ITask } from './types/schema';
-import { getAllTasks, store } from './store/store';
-import { useEffect, useState } from 'react';
+import { getAllTasks } from './store/task';
 import { useSelector } from 'react-redux';
 
 const Background = styled.div`
@@ -24,7 +23,7 @@ function App() {
         <h2 style={{color: 'white'}}>My Todos</h2>
         <div style={{width: '80%', margin: 'auto'}}>
           <AddTask/>
-          {tasks.map((task => (<TaskCard key={task.id}task={
+          {tasks.map((task => (<TaskCard key={task.id} task={
             task
             }/>)))}
         </div>
