@@ -1,3 +1,5 @@
+import { ITask } from "../types/schema";
+
 const initialState = {
     isEditing: false,
     currentTask: null,
@@ -28,9 +30,9 @@ export const changeIsEditing = (value : boolean) => {
     }
 }
 
-export const changeCurrentTask = (id: number | null) => {
+export const changeCurrentTask = (task: ITask | null) => {
     return {
         type: "changeCurrentTask",
-        payload: id
+        payload: task,
     }
 }
