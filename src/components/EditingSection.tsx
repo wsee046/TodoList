@@ -4,6 +4,8 @@ import { Label } from '../styles/AddTaskStyles';
 import { useDispatch } from 'react-redux';
 import React from 'react';
 import { changeName, changeDescription } from '../store/task';
+import { changeIsEditing } from '../store/editing';
+import { Button, InputField } from '../styles/TaskCardStyles';
 
 const EditingArea = styled.div`
   background-color: white;
@@ -29,15 +31,21 @@ function EditingSection(props : EditingProps) {
     dispatch(changeDescription(task.id, event.target.value));   
   }
 
+  function handleSubmit() {
+    dispatch(changeIsEditing(false));
+  }
+
   return (
     <EditingArea>
       <h1>Editing "{props.task.name}"</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
           <Label htmlFor="taskNameInput">Name:</Label>
-          <input id="taskNameInput" type="text" value={props.task.name} onChange={handleNameChange}></input>
+          <InputField id="taskNameInput" type="text" value={props.task.name} onChange={handleNameChange}></InputField>
 
           <Label htmlFor="TaskDescriptionInput">Description:</Label>
-          <input id="TaskDescriptionInput" type="text" value={props.task.description} onChange={handleDescriptionChange}></input>
+          <InputField id="TaskDescriptionInput" type="text" value={props.task.description} onChange={handleDescriptionChange}></InputField>
+
+          <Button color="Blue">Done</Button>
       </form>
     </EditingArea>
   )
