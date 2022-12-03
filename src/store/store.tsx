@@ -97,15 +97,6 @@ export const getAllTasks = (state : any) => {
 
 
 // action creators
-export const changeIsComplete = (id : number) => {
-    return {
-        type: "changeIsComplete",
-        payload: {
-            id: id,
-            isCompleteValue: true,
-        },
-    }
-}  
 
 export const addTask = (task : ITask) => {
     return {
@@ -121,6 +112,36 @@ export const deleteTask = (id : number) => {
         type: "deleteTask",
         payload: {
             id: id
+        }
+    }
+}
+
+export const changeIsComplete = (id : number) => {
+    return {
+        type: "changeIsComplete",
+        payload: {
+            id: id,
+            isCompleteValue: true,
+        },
+    }
+}
+
+export const changeName = (id: number, newName: string) => {
+    return {
+        type: "changeName",
+        payload: {
+            id: id,
+            name: newName,
+        }
+    }
+}
+
+export const changeDescription = (id: number, newDescription : string) => {
+    return {
+        type: "changeDescription",
+        payload: {
+            id: id,
+            description: newDescription,
         }
     }
 }

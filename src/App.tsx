@@ -24,7 +24,7 @@ function App() {
         <h2 style={{color: 'white'}}>My Todos</h2>
         <div style={{width: '80%', margin: 'auto'}}>
           <AddTask/>
-          {tasks.map((task => (<TaskCard key={task.id}task={
+          {tasks.map((task => (<TaskCard key={task.id} task={
             task
             }/>)))}
         </div>

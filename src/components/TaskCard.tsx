@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { ITask } from "../types/schema";
 import { useDispatch } from "react-redux";
 import { changeIsComplete, deleteTask } from "../store/store";
+import EditingSection from "./EditingSection";
+import { useState } from "react";
+
 interface TaskCardProps {
   task: ITask;
 }
@@ -12,6 +15,7 @@ const TaskCardContainer = styled.div`
     background-color: dimgrey;
     padding: 2%;
     border: solid 1px black;
+    margin: 1% 0;
   `
 
   const TaskTitle = styled.h1`
@@ -45,9 +49,10 @@ const TaskCardContainer = styled.div`
 
 function TaskCard(props : TaskCardProps) {
 
-  const task = props.task
-
+  const task = props.task;
   const dispatch = useDispatch();
+
+  const [isEditing, setIsEditing] = useState(false);
 
   function onComplete() {
     dispatch(changeIsComplete(task.id));
@@ -57,19 +62,25 @@ function TaskCard(props : TaskCardProps) {
     dispatch(deleteTask(task.id))
   }
 
+  function onEdit(){
+    setIsEditing(!isEditing);
+  }
+
   return (
-    <TaskCardContainer>
-        <TaskInfo style={{color: task.isComplete ? 'dark-brown' : '',
-      textDecoration: task.isComplete ? 'line-through' : ''}}>
-            <TaskTitle>{task.name}</TaskTitle>
-            <TaskDescription>{task.description}</TaskDescription>
-        </TaskInfo>
-        <Buttons>
-            <Button color="green" onClick={onComplete}>Complete</Button>
-            <Button color="blue">Edit</Button>
-            <Button color="red" onClick={onDelete}>Delete</Button>
-        </Buttons>
-    </TaskCardContainer>
+    <>
+      <TaskCardContainer>
+          <TaskInfo style={{textDecoration: task.isComplete ? 'line-through' : ''}}>
+              <TaskTitle>{task.name}</TaskTitle>
+              <TaskDescription>{task.description}</TaskDescription>
+          </TaskInfo>
+          <Buttons>
+              <Button color="green" onClick={onComplete}>Complete</Button>
+              <Button color="blue" onClick={onEdit}>Edit</Button>
+              <Button color="red" onClick={onDelete}>Delete</Button>
+          </Buttons>
+      </TaskCardContainer>
+      {isEditing && <EditingSection task={task}/>}
+    </>
   )
 }
 
