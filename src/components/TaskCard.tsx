@@ -44,7 +44,7 @@ function TaskCard(props : TaskCardProps) {
   return (
     <>
       <TaskCardContainer>
-          <TaskInfo style={{textDecoration: task.isComplete ? 'line-through' : ''}}>
+          <TaskInfo isComplete={task.isComplete}>
               <TaskTitle>{task.name}</TaskTitle>
               <TaskDescription>{task.description}</TaskDescription>
           </TaskInfo>
