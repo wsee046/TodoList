@@ -1,4 +1,5 @@
 import { ITask } from "../types/schema";
+import { produce } from "immer";
 
 var currentId: number = 1;
 
@@ -17,63 +18,60 @@ const initialState = {
   },
 };
 
-export function taskReducer(state: any = initialState, action: any) {
-  switch (action.type) {
-    case "changeName": {
-      const { id, name } = action.payload;
-      return {
-        ...state,
-        [id]: {
-          ...state[id],
-          name: name,
-        },
-      };
-    }
-    case "changeDescription": {
-      const { id, description } = action.payload;
-      return {
-        ...state,
-        [id]: {
-          ...state[id],
-          description: description,
-        },
-      };
-    }
-    case "changeIsComplete": {
-      const id = action.payload.id;
-      const isCompleteValue = action.payload.isCompleteValue;
-      const newState = {
-        ...state,
-        [id]: {
-          ...state[id],
-          isComplete: isCompleteValue,
-        },
-      };
-      return newState;
-    }
-    case "addTask": {
-      const { task } = action.payload;
-      return {
-        ...state,
-        [task.id]: {
+// playing around with produce from immer.
+export const taskReducer = (
+  state = initialState,
+  action: {
+    type: any;
+    payload: {
+      id?: any;
+      name?: any;
+      description?: any;
+      isCompleteValue?: any;
+      task?: any;
+    };
+  }
+) =>
+  produce(state, (draftState: { [id: number]: ITask }) => {
+    switch (action.type) {
+      case "changeName": {
+        const { id, name } = action.payload;
+        draftState[id].name = name;
+        break;
+      }
+      case "changeDescription": {
+        const { id, description } = action.payload;
+        draftState[id].description = description;
+        break;
+      }
+
+      case "changeIsComplete": {
+        const { id, isCompleteValue } = action.payload;
+        draftState[id].isComplete = isCompleteValue;
+        break;
+      }
+
+      case "addTask": {
+        const { task } = action.payload;
+        draftState[task.id] = {
           id: task.id,
           name: task.name,
           description: task.description,
           isComplete: task.isComplete,
-        },
-      };
-    }
-    case "deleteTask": {
-      const { id } = action.payload;
-      const newState = { ...state };
-      delete newState[id];
-      return newState;
-    }
+        };
+        break;
+      }
 
-    default:
-      return state;
-  }
-}
+      case "deleteTask": {
+        const { id } = action.payload;
+        delete draftState[id];
+        break;
+      }
+
+      default:
+        break;
+    }
+  });
 
 // selectors
 export const getName = (id: number) => {
